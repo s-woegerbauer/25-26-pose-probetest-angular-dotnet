@@ -1,0 +1,51 @@
+@if (isLoading()) {
+  <p>Loading ...</p>
+} @else {
+  <button class="btn btn-primary" (click)="addBook()">
+    Add Book
+  </button>
+
+  <input
+    id="nameFilter"
+    type="text"
+    name="nameFilter"
+    [(ngModel)]="nameFilter"
+  />
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Preis</th>
+    </tr>
+    </thead>
+    @for (book of filteredBooks(); track book.id) {
+      <tbody>
+      <tr class="border-bottom">
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.price }} €</td>
+        <td>
+          <button class="btn btn-secondary" (click)="detailBook(book.id)">
+            Details
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-warning" (click)="editBook(book.id)">
+            Edit
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteBook(book.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    }
+  </table>
+}
+
+@if (selectedBook() !== undefined) {
+  <app-book-detail [book]="selectedBook()" (onClose)="closeDetail()"></app-book-detail>
+}

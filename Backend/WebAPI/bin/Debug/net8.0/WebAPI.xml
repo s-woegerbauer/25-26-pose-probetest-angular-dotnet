@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:WebAPI.BookService">
+            <summary>
+            Service providing in-memory book operations.
+            </summary>
+        </member>
+        <member name="M:WebAPI.BookService.GetAllBooksAsync">
+            <summary>
+            Returns all books.
+            </summary>
+            <returns>A list of all books.</returns>
+        </member>
+        <member name="M:WebAPI.BookService.GetBookByIdAsync(System.Int32)">
+            <summary>
+            Gets a book by its identifier.
+            </summary>
+            <param name="id">The book id.</param>
+            <returns>The book if found; otherwise null.</returns>
+        </member>
+        <member name="M:WebAPI.BookService.TitleExistsAsync(System.String)">
+            <summary>
+            Checks whether a title already exists.
+            </summary>
+            <param name="title">The title to check.</param>
+            <returns>True if a book with the given title exists (excluding excludeId), otherwise false.</returns>
+        </member>
+        <member name="M:WebAPI.BookService.CreateBookAsync(WebAPI.BookDto)">
+            <summary>
+            Creates a new book and assigns it an id.
+            </summary>
+            <param name="book">The book to create.</param>
+            <returns>The created book (with id).</returns>
+        </member>
+        <member name="M:WebAPI.BookService.UpdateBookAsync(System.Int32,WebAPI.BookDto)">
+            <summary>
+            Updates an existing book.
+            </summary>
+            <param name="id">The id of the book to update.</param>
+            <param name="book">The book data to update.</param>
+            <returns>The updated book if found; otherwise null.</returns>
+        </member>
+        <member name="M:WebAPI.BookService.DeleteBookAsync(System.Int32)">
+            <summary>
+            Deletes a book by id.
+            </summary>
+            <param name="id">The id of the book to delete.</param>
+            <returns>True if the book was removed; otherwise false.</returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,55 @@
+@if(id()) {
+  <h2>Edit</h2>
+} @else {
+  <h2>Add</h2>
+}
+
+<form (ngSubmit)="onSubmit()" #bookForm="ngForm">
+  <label for="title" name="title">Title:</label>
+  <input
+    id="title"
+    type="text"
+    name="title"
+    required
+    #titleInput=ngModel
+    appBookTitleCheck
+    [(ngModel)]="title"
+  />
+  @if(titleInput.errors?.['titleInvalid']) {<div>Title already taken</div>}
+  <label for="author" name="author">Author:</label>
+  <input
+    id="author"
+    type="text"
+    name="author"
+    required
+    [(ngModel)]="author"
+  />
+  <label for="price" name="price">Preis:</label>
+  <input
+    id="price"
+    type="text"
+    name="price"
+    required
+    [(ngModel)]="price"
+  />
+  <label for="publishedDate" name="publishedDate">Preis:</label>
+  <input
+    id="publishedDate"
+    type="date"
+    name="publishedDate"
+    required
+    [(ngModel)]="publishedDate"
+  />
+  <label for="available" name="available">Available:</label>
+  <input
+    id="available"
+    type="checkbox"
+    name="available"
+    [(ngModel)]="available"
+  />
+  @if(id()) {
+    <button type="submit" [disabled]="!bookForm.form.valid">Update</button>
+  } @else {
+    <button type="submit" [disabled]="!bookForm.form.valid">Add</button>
+  }
+</form>

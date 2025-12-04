@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { DataService } from '../../services/book.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -10,6 +8,4 @@ import { DataService } from '../../services/book.service';
   styleUrl: './nav-menu.component.css'
 })
 export class NavMenuComponent {
-
-  constructor(public dataService: DataService) { }
 }

@@ -92,8 +92,7 @@ public class BookService : IBookService
     /// <returns>A list of all books.</returns>
     public Task<IList<Book>> GetAllBooksAsync()
     {
-        // Return an empty list as a safe default so the project compiles.
-        return Task.FromResult<IList<Book>>(new List<Book>());
+        return Task.FromResult<IList<Book>>(_books);
     }
 
     /// <summary>
@@ -103,18 +102,17 @@ public class BookService : IBookService
     /// <returns>The book if found; otherwise null.</returns>
     public Task<Book?> GetBookByIdAsync(int id)
     {
-        return Task.FromResult<Book?>(null);
+        return Task.FromResult<Book?>(_books.FirstOrDefault(b => b.Id == id));
     }
 
     /// <summary>
     /// Checks whether a title already exists.
     /// </summary>
     /// <param name="title">The title to check.</param>
-    /// <param name="excludeId">Optional id to exclude from the check.</param>
     /// <returns>True if a book with the given title exists (excluding excludeId), otherwise false.</returns>
-    public Task<bool> TitleExistsAsync(string title, int? excludeId = null)
+    public Task<bool> TitleExistsAsync(string title)
     {
-        return Task.FromResult(false);
+        return Task.FromResult(_books.Any(b => b.Title == title));
     }
 
     /// <summary>
@@ -122,10 +120,22 @@ public class BookService : IBookService
     /// </summary>
     /// <param name="book">The book to create.</param>
     /// <returns>The created book (with id).</returns>
-    public Task<Book?> CreateBookAsync(Book book)
+    public Task<Book> CreateBookAsync(BookDto book)
     {
-        return Task.FromResult<Book?>(null);
+        var created = new Book
+        {
+            Id            = _nextId++,
+            Title         = book.Title,
+            Author        = book.Author,
+            PublishedDate = book.PublishedDate,
+            Price         = book.Price,
+            IsAvailable   = book.IsAvailable
+        };
+    
+        _books.Add(created);
+        return Task.FromResult(created);
     }
+
 
     /// <summary>
     /// Updates an existing book.
@@ -133,9 +143,26 @@ public class BookService : IBookService
     /// <param name="id">The id of the book to update.</param>
     /// <param name="book">The book data to update.</param>
     /// <returns>The updated book if found; otherwise null.</returns>
-    public Task<Book?> UpdateBookAsync(int id, Book book)
+    public Task<Book?> UpdateBookAsync(int id, BookDto book)
     {
-        return Task.FromResult<Book?>(null);
+        if (_books.FirstOrDefault(b => b.Id == id) == null)
+        {
+            return Task.FromResult<Book?>(null);
+        }
+        
+        var updated = new Book()
+        {
+            Id            = id,
+            Title         = book.Title,
+            Author        = book.Author,
+            PublishedDate = book.PublishedDate,
+            Price         = book.Price,
+            IsAvailable   = book.IsAvailable
+        };
+
+        _books[id - 1] = updated;
+        
+        return Task.FromResult<Book?>(updated);
     }
 
     /// <summary>
@@ -145,6 +172,6 @@ public class BookService : IBookService
     /// <returns>True if the book was removed; otherwise false.</returns>
     public Task<bool> DeleteBookAsync(int id)
     {
-        return Task.FromResult(false);
+        return Task.FromResult(_books.RemoveAll(b => b.Id == id) > 0);
     }
 }

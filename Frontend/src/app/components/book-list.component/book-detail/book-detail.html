@@ -1,0 +1,8 @@
+@if(book()) {
+<p><strong>Title: </strong> {{book()?.title}}</p>
+<p><strong>Author: </strong> {{book()?.author}}</p>
+<p><strong>Preis: </strong> {{book()?.price}}</p>
+<p><strong>Publish Date: </strong> {{book()?.publishedDate}}</p>
+<p><strong>Available: </strong> {{book()?.isAvailable ? 'Yes': 'No'}}</p>
+  <button class="btn btn-close" (click)="close()"></button>
+}
